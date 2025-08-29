@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Arun sajwan | Form Validation </title>
+  <link rel="shortcut icon" href="portfolio-icon.png" type="image/x-icon">
+  <style>
+    :root{--bg:#f6f8fb;--card:#fff;--accent:#4f46e5;--danger:#ef4444;--muted:#6b7280}
+    *{box-sizing:border-box}
+    body{font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;background:var(--bg);margin:0;padding:32px;display:flex;align-items:center;justify-content:center;min-height:100vh}
+    .card{background:var(--card);width:100%;max-width:720px;border-radius:12px;box-shadow:0 6px 24px rgba(15,23,42,0.08);padding:28px}
+    h1{margin:0 0 8px;font-size:20px}
+    p.lead{margin:0 0 20px;color:var(--muted)}
+
+    form .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    label{display:block;font-size:13px;margin-bottom:6px}
+    input[type=text],input[type=email],input[type=password],input[type=tel],input[type=url],input[type=number],select,textarea{
+      width:100%;padding:10px 12px;border:1px solid #e6e9ef;border-radius:8px;background:transparent;font-size:14px}
+    textarea{min-height:100px;resize:vertical}
+    .full{grid-column:1/-1}
+    .row{display:flex;align-items:center;gap:8px}
+
+    .help{font-size:12px;color:var(--muted);margin-top:6px}
+    .error{color:var(--danger);font-size:13px;margin-top:6px}
+    .hidden{display:none}
+
+    .strength{height:8px;background:#eef2ff;border-radius:999px;overflow:hidden;margin-top:8px}
+    .strength > i{display:block;height:100%;width:0%;background:linear-gradient(90deg,#f97316,#84cc16);transition:width .25s}
+
+    .actions{display:flex;gap:12px;justify-content:flex-end;margin-top:18px}
+    button{padding:10px 16px;border-radius:8px;border:0;background:var(--accent);color:white;font-weight:600;cursor:pointer}
+    button.secondary{background:transparent;border:1px solid #e6e9ef;color:#111}
+
+    @media (max-width:640px){.grid{grid-template-columns:1fr}.card{padding:20px}}
+
+    body.dark {
+      --bg: #181a20;
+      --card: #23272f;
+      --accent: #6366f1;
+      --danger: #ef4444;
+      --muted: #a1a1aa;
+      color: #e5e7eb;
+    }
+    body.dark .card {
+      background: var(--card);
+      color: #e5e7eb;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+    }
+    body.dark input,
+    body.dark textarea,
+    body.dark select {
+      background: #23272f;
+      color: #e5e7eb;
+      border: 1px solid #374151;
+    }
+    body.dark label {
+      color: #e5e7eb;
+    }
+    body.dark .help,
+    body.dark .error {
+      color: var(--muted);
+    }
+    body.dark .error {
+      color: var(--danger);
+    }
+    body.dark button {
+      background: var(--accent);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <main class="card" role="main">
+    <h1>Sign up </h1>
+    <p class="lead">Client-side validation with clear, accessible messages and live feedback.</p>
+
+    <form id="signup" novalidate>
+      <div class="grid">
+        <div>
+          <label for="first">First name</label>
+          <input id="first" name="first" type="text" required minlength="2" autocomplete="given-name">
+          <div class="error hidden" id="firstError"></div>
+        </div>
+
+        <div>
+          <label for="last">Last name</label>
+          <input id="last" name="last" type="text" required minlength="2" autocomplete="family-name">
+          <div class="error hidden" id="lastError"></div>
+        </div>
+
+        <div class="full">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required autocomplete="email">
+          <div class="error hidden" id="emailError"></div>
+          <div class="help">We'll never share your email.</div>
+        </div>
+
+        <div>
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" required minlength="8" autocomplete="new-password">
+          <div class="strength" aria-hidden="true"><i id="pwdBar"></i></div>
+          <div class="error hidden" id="passwordError"></div>
+          <div class="help">Use 8+ characters with letters and numbers.</div>
+        </div>
+
+        <div>
+          <label for="confirm">Confirm password</label>
+          <input id="confirm" name="confirm" type="password" required autocomplete="new-password">
+          <div class="error hidden" id="confirmError"></div>
+        </div>
+
+        <div>
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" type="tel" pattern="^\\+?[0-9\- ]{7,15}$" placeholder="+91 98765 43210">
+          <div class="error hidden" id="phoneError"></div>
+        </div>
+
+        <div>
+          <label for="age">Age</label>
+          <input id="age" name="age" type="number" min="13" max="120">
+          <div class="error hidden" id="ageError"></div>
+        </div>
+
+        <div class="full">
+          <label for="website">Website (optional)</label>
+          <input id="website" name="website" type="url" placeholder="https://example.com">
+          <div class="error hidden" id="websiteError"></div>
+        </div>
+
+        <div class="full">
+          <label for="bio">Short bio (optional)</label>
+          <textarea id="bio" name="bio" maxlength="300" placeholder="Tell us a little about yourself"></textarea>
+          <div class="help" id="bioCount">0 / 300</div>
+        </div>
+
+        <div class="full row">
+          <input id="terms" name="terms" type="checkbox" required>
+          <label for="terms">I agree to the <a href="#">terms and conditions</a>.</label>
+        </div>
+        <div class="full">
+          <div class="error hidden" id="formError"></div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="secondary" id="resetBtn">Reset</button>
+        <button type="submit">Create account</button>
+      </div>
+    </form>
+  </main>
+
+  <button id="themeToggle" style="position:fixed;top:24px;right:24px;padding:8px 14px;border-radius:8px;border:none;background:#6366f1;color:#fff;font-weight:bold;cursor:pointer;z-index:10;">
+  🌙 Dark
+</button>
+
+  <script>
+    // Utilities
+    const $ = id => document.getElementById(id);
+    const showError = (id, msg) => { const el=$(id); el.textContent=msg; el.classList.remove('hidden'); };
+    const hideError = id => { const el=$(id); el.textContent=''; el.classList.add('hidden'); };
+
+    const form = $('signup');
+    const pwd = $('password');
+    const confirm = $('confirm');
+    const pwdBar = $('pwdBar');
+
+    // Password strength: returns score 0-3
+    function passwordStrength(value){
+      let score=0;
+      if(value.length>=8) score++;
+      if(/[A-Z]/.test(value) && /[a-z]/.test(value)) score++;
+      if(/[0-9]/.test(value) || /[^A-Za-z0-9]/.test(value)) score++;
+      return score; // 0..3
+    }
+
+    function updateStrengthBar(){
+      const score = passwordStrength(pwd.value);
+      const pct = (score/3)*100;
+      pwdBar.style.width = pct + '%';
+    }
+
+    // Live validation handlers
+    pwd.addEventListener('input', ()=>{
+      updateStrengthBar();
+      if(pwd.value.length < 8) showError('passwordError','Password must be at least 8 characters.'); else hideError('passwordError');
+      if(confirm.value) validateConfirm();
+    });
+
+    confirm.addEventListener('input', validateConfirm);
+    function validateConfirm(){
+      if(confirm.value !== pwd.value) showError('confirmError','Passwords do not match.'); else hideError('confirmError');
+    }
+
+    $('bio').addEventListener('input', e=>{
+      $('bioCount').textContent = e.target.value.length + ' / 300';
+    });
+
+    // Generic check function that uses native validity when possible
+    function checkField(field, errId, customCheck){
+      const el = $(field);
+      const errorId = errId;
+      if(customCheck){
+        const error = customCheck(el.value);
+        if(error){ showError(errorId, error); return false } else { hideError(errorId); return true }
+      }
+
+      if(!el.checkValidity()){
+        // Map common validity states to messages
+        if(el.validity.valueMissing) showError(errorId,'This field is required.');
+        else if(el.validity.typeMismatch) showError(errorId,'Please enter a valid value.');
+        else if(el.validity.tooShort) showError(errorId,`Value is too short (minimum ${el.getAttribute('minlength')} chars).`);
+        else if(el.validity.patternMismatch) showError(errorId,'Invalid format.');
+        else if(el.validity.rangeUnderflow) showError(errorId,`Value must be at least ${el.getAttribute('min')}.`);
+        else if(el.validity.rangeOverflow) showError(errorId,`Value must be ${el.getAttribute('max')} or less.`);
+        else showError(errorId,'Invalid field.');
+        return false
+      }
+      hideError(errorId);
+      return true
+    }
+
+    // Form submit
+    form.addEventListener('submit', e=>{
+      e.preventDefault();
+      let ok = true;
+      ok &= checkField('first','firstError');
+      ok &= checkField('last','lastError');
+      ok &= checkField('email','emailError');
+      ok &= checkField('password','passwordError', val => val.length < 8 ? 'Password must be at least 8 characters.' : null);
+      ok &= (function(){ const r = checkField('confirm','confirmError', val => val !== pwd.value ? 'Passwords do not match.' : null); return r; })();
+      ok &= checkField('phone','phoneError', val => { if(val && !/^\+?[0-9\- ]{7,15}$/.test(val)) return 'Please enter a valid phone number.'; return null });
+      ok &= checkField('age','ageError', val => { if(val){const n=Number(val); if(n<13) return 'You must be at least 13.'; if(n>120) return 'Please enter a realistic age.';} return null });
+      ok &= checkField('website','websiteError', val => { if(val){ try{ new URL(val); }catch(_){ return 'Please enter a valid URL (include https://)'; } } return null });
+
+      // Terms checkbox
+      const terms = $('terms');
+      if(!terms.checked){ showError('formError','You must agree to the terms and conditions.'); ok = false } else hideError('formError');
+
+      if(ok){
+        // If this were a real app we'd send data via fetch. For demo, show success UI.
+        alert('Form is valid — submitted!');
+        form.reset();
+        pwdBar.style.width = '0%';
+        $('bioCount').textContent = '0 / 300';
+      } else {
+        // Focus first visible error
+        const firstError = document.querySelector('.error:not(.hidden)');
+        if(firstError){ const idx = firstError.id.replace('Error',''); const input = document.querySelector('[name]#'+idx) || firstError.previousElementSibling; if(input && input.focus) input.focus(); }
+      }
+    });
+
+    // Reset button
+    $('resetBtn').addEventListener('click', ()=>{
+      form.reset();
+      document.querySelectorAll('.error').forEach(el=>el.classList.add('hidden'));
+      pwdBar.style.width='0%';
+      $('bioCount').textContent='0 / 300';
+    });
+
+    // Optional: perform instant validation on blur for required fields
+    ['first','last','email','password','confirm'].forEach(id=>{
+      $(id).addEventListener('blur', ()=> checkField(id, id+'Error'));
+    });
+  </script>
+  <script>
+  const themeToggle = document.getElementById('themeToggle');
+  const body = document.body;
+
+  // Load theme from localStorage
+  if(localStorage.getItem('theme') === 'dark') {
+    body.classList.add('dark');
+    themeToggle.textContent = '☀️ Light';
+  }
+
+  themeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark');
+    if(body.classList.contains('dark')) {
+      themeToggle.textContent = '☀️ Light';
+      localStorage.setItem('theme', 'dark');
+    } else {
+      themeToggle.textContent = '🌙 Dark';
+      localStorage.setItem('theme', 'light');
+    }
+  });
+</script>
+</body>
+</html>

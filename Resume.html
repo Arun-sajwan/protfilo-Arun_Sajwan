@@ -1,0 +1,227 @@
+<!--
+Personal Resume Website (single-file)
+Instructions:
+1. Open this file in a code editor and replace the placeholder text (YOUR NAME, YOUR TITLE, BIO, links) with your details.
+2. Optional: Replace the profile.jpg placeholder with your photo (same folder) or remove the <img> tag.
+3. Save as "index.html" and open in a browser. For hosting, push to GitHub Pages or Netlify.
+
+Features:
+- Hero section with photo, name, title and CTA
+- About, Skills, Experience, Projects, Education, Contact
+- Download resume button (links to resume.pdf — add file to same folder)
+- Responsive layout and theme toggle (light/dark)
+-->
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Arun sajwan | Resume</title>
+  <link rel="shortcut icon" href="portfolio-icon.png" type="image/x-icon">
+  <meta name="description" content="Personal resume / portfolio of YOUR NAME" />
+  <style>
+    :root{
+      --bg:#f7fbff;--card:#ffffff;--text:#0b1220;--muted:#54627a;--accent:#2563eb;
+      --glass: rgba(8,13,20,0.04);
+    }
+    [data-theme="dark"]{--bg:#071023;--card:#0b1220;--text:#e6eef8;--muted:#9fb0c9;--accent:#60a5fa;--glass:rgba(255,255,255,0.04)}
+
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--text); line-height:1.45}
+    .container{max-width:960px;margin:28px auto;padding:20px}
+    .card{background:var(--card);border-radius:12px;padding:18px;box-shadow:0 8px 30px var(--glass);}
+
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .avatar{width:72px;height:72px;border-radius:12px;overflow:hidden;flex-shrink:0}
+    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+    .name{font-size:18px;font-weight:700}
+    .role{color:var(--muted);font-size:13px}
+
+    .controls{display:flex;gap:8px;align-items:center}
+    .btn{padding:8px 12px;border-radius:8px;border:none;background:var(--accent);color:white;font-weight:600;cursor:pointer}
+    .btn.ghost{background:transparent;color:var(--text);border:1px solid rgba(0,0,0,0.06)}
+
+    .grid{display:grid;grid-template-columns:1fr 320px;gap:18px}
+    @media (max-width:880px){.grid{grid-template-columns:1fr}}
+
+    /* Left column */
+    .hero{display:flex;gap:16px;align-items:center}
+    .hero .intro{flex:1}
+    h1{margin:0;font-size:28px}
+    p.lead{margin:8px 0;color:var(--muted)}
+
+    section{margin-top:16px}
+    h2{font-size:16px;margin:0 0 8px 0}
+    .muted{color:var(--muted);font-size:14px}
+
+    .skills{display:flex;flex-direction:column;gap:8px}
+    .skill{display:flex;justify-content:space-between;gap:10px;align-items:center}
+    .bar{height:8px;background:var(--glass);border-radius:8px;flex:1;overflow:hidden}
+    .bar > i{display:block;height:100%;background:var(--accent);border-radius:8px}
+
+    .experience .item{padding:12px;border-radius:8px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);}
+    .project{padding:12px;border-radius:8px;border:1px dashed rgba(0,0,0,0.05)}
+
+    .right .card{padding:14px}
+    .contact a{display:inline-block;margin-right:8px;margin-top:6px}
+
+    footer{margin-top:18px;text-align:center;color:var(--muted);font-size:13px}
+
+    /* small util */
+    .tags{display:flex;gap:8px;flex-wrap:wrap}
+    .tag{padding:6px 8px;border-radius:999px;background:var(--glass);font-size:13px}
+
+  </style>
+</head>
+<body data-theme="dark">
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="avatar card"><img src="gpt-ion.png" alt="Profile photo" onerror="this.style.display='none'"/></div>
+        <div>
+          <div class="name">ARUN SAJWAN</div>
+          <div class="role">4th-Year B.Tech • Computer Science Engineering</div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="btn" onclick="downloadResume()">Download Resume</button>
+        <button class="btn ghost" id="themeToggle">Toggle Theme</button>
+      </div>
+    </header>
+
+    <main class="grid">
+      <div>
+        <div class="card">
+          <div class="hero">
+            <div class="intro">
+              <h1>Hi, I'm Arun — Computer Science Student & Aspiring AI Developer</h1>
+              <p class="lead">I build small projects, web apps, and learn AI concepts. Currently studying Computer Science Engineering and following an AI syllabus (search, logic, probabilistic reasoning, neural networks).</p>
+              <div style="margin-top:12px">
+                <a class="btn" href="#projects">See my projects</a>
+                <a class="btn ghost" href="#contact">Contact me</a>
+              </div>
+            </div>
+            <div style="width:120px;text-align:center">
+              <div style="font-size:12px;color:var(--muted)">Location</div>
+              <div style="font-weight:700">India</div>
+            </div>
+          </div>
+
+          <section id="about">
+            <h2>About</h2>
+            <p class="muted">I am a motivated B.Tech Final year student studying Computer Science Engineering. I enjoy learning AI, building small web apps, and solving algorithmic problems. I make simple, practical projects that I can host and show.</p>
+          </section>
+
+          <section id="skills">
+            <h2>Skills</h2>
+            <div class="skills">
+              <div class="skill"><div class="muted">HTML / CSS / JS</div><div style="width:70px;text-align:right">Intermediate</div></div>
+              <div class="bar"><i style="width:65%"></i></div>
+
+              <div class="skill"><div class="muted">Python</div><div style="width:70px;text-align:right">Intermediate</div></div>
+              <div class="bar"><i style="width:55%"></i></div>
+
+              <div class="skill"><div class="muted">Basic Electronics</div><div style="width:70px;text-align:right">Learning</div></div>
+              <div class="bar"><i style="width:60%"></i></div>
+
+              <div class="skill"><div class="muted">AI / ML concepts</div><div style="width:70px;text-align:right">Beginner</div></div>
+              <div class="bar"><i style="width:40%"></i></div>
+            </div>
+          </section>
+
+          <section id="experience">
+            <h2>Experience</h2>
+            <div class="experience">
+              <div class="item">
+                <div style="display:flex;justify-content:space-between"><strong>Personal Projects</strong><span class="muted">2022 — present</span></div>
+                <div class="muted" style="margin-top:6px">Built a weather web app, small JS utilities, and experimented with simple ML demos.</div>
+              </div>
+            </div>
+          </section>
+
+          <section id="projects">
+            <h2>Projects</h2>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div class="project">
+                <strong>Weather Buddy (Web App)</strong>
+                <div class="muted">HTML/CSS/JS • Uses OpenWeatherMap API • Features city search & geolocation.</div>
+              </div>
+
+              <div class="project">
+                <strong>Portfolio Website (This Site)</strong>
+                <div class="muted">Single-file resume/portfolio template. Editable and responsive.</div>
+              </div>
+            </div>
+          </section>
+
+          <section id="education">
+            <h2>Education</h2>
+            <div class="muted">B.Tech — Computer Science Engineering (4th Year)</div>
+          </section>
+
+        </div>
+
+        <footer>Tip: Edit this file to personalize details. Add a resume.pdf in same folder for the Download button to work.</footer>
+      </div>
+
+      <aside class="right">
+        <div class="card">
+          <h2>Contact</h2>
+          <div class="muted">Email</div>
+          <div><a href="mailto:youremail@example.com">youremail@example.com</a></div>
+
+          <div style="margin-top:10px" class="tags">
+            <div class="tag">GitHub</div>
+            <div class="tag">LinkedIn</div>
+            <div class="tag">LeetCode</div>
+          </div>
+
+          <section style="margin-top:12px">
+            <h2>Quick Info</h2>
+            <div class="muted">Ready to collaborate • Open to internships • Learning AI & web</div>
+          </section>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h2>Skills Snapshot</h2>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+            <div style="display:flex;justify-content:space-between"><span class="muted">Frontend</span><strong>65%</strong></div>
+            <div style="display:flex;justify-content:space-between"><span class="muted">Python</span><strong>55%</strong></div>
+            <div style="display:flex;justify-content:space-between"><span class="muted">Machine Learning</span><strong>60%</strong></div>
+          </div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script>
+    // Basic interactions: theme toggle and download placeholder
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', ()=>{
+      const root = document.documentElement;
+      const cur = document.body.getAttribute('data-theme');
+      document.body.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
+    });
+
+    function downloadResume(){
+      // Replace 'resume.pdf' with your actual resume file name in the same folder.
+      const url = 'resume.pdf';
+      // try to open the file
+      window.open(url, '_blank');
+    }
+
+    // Smooth scroll for in-page links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        e.preventDefault();
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+      })
+    });
+  </script>
+</body>
+</html>
