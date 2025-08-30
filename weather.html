@@ -81,7 +81,7 @@ Instructions:
 
   <script>
     // Replace the API key string with your real API key from openweathermap.org
-    const API_KEY = '81ae6010f73718aa018c5f90d16f000a';
+    const API_KEY = 'API_Key_place_here';
     const $ = id => document.getElementById(id);
 
     const cityInput = $('cityInput');
@@ -160,8 +160,9 @@ Instructions:
       const defaultCity = 'Dehradun';
       cityInput.value = defaultCity;
       // Do NOT automatically call API in case user hasn't set key; just pre-fill
-      setStatus('Please enter a city name or allow location access.');
+      setStatus('Please enter a city name or allow location access. Please Enter the API Key First');
     })();
   </script>
 </body>
 </html>
+
